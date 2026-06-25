@@ -11508,13 +11508,43 @@ body {
 }
 
 .signal-network-hero .module-connection {
-  animation-duration: 920ms;
+  animation-duration: 1180ms;
   animation-timing-function: var(--ease-premium);
+}
+
+.signal-network-hero .module-site .module-connection,
+.signal-network-hero .module-security .module-connection,
+.signal-network-hero .module-cloud .module-connection {
+  animation-name: connectionResolve, heroConnectionGlow;
+  animation-duration: 1180ms, 3600ms;
+  animation-timing-function: var(--ease-premium), var(--ease-premium-inout);
+  animation-fill-mode: forwards, both;
+}
+
+.signal-network-hero .module-site .module-connection {
+  animation-delay: 720ms, 820ms;
+}
+
+.signal-network-hero .module-security .module-connection {
+  animation-delay: 960ms, 1060ms;
+}
+
+.signal-network-hero .module-cloud .module-connection {
+  animation-delay: 1240ms, 1340ms;
 }
 
 .signal-network-hero .network-module {
   filter: drop-shadow(0 0 0 rgba(47, 212, 199, 0));
   transition: filter var(--motion-premium-standard) var(--ease-premium), transform var(--motion-premium-standard) var(--ease-premium);
+}
+
+.signal-network-hero .module-orbit,
+.signal-network-hero .module-point,
+.signal-network-hero .core-glow,
+.signal-network-hero .core-ring,
+.signal-network-hero .core-signal {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 .signal-network-hero .network-module:hover,
@@ -11527,12 +11557,42 @@ body {
   animation-delay: calc(1050ms + var(--i) * 130ms);
 }
 
+.signal-network-hero .module-site .module-orbit,
+.signal-network-hero .module-site .module-point,
+.signal-network-hero .module-security .module-orbit,
+.signal-network-hero .module-security .module-point,
+.signal-network-hero .module-cloud .module-orbit,
+.signal-network-hero .module-cloud .module-point {
+  animation-name: heroNodeActivate, signalNodeConfirm;
+  animation-duration: 900ms, 6200ms;
+  animation-timing-function: var(--ease-premium), var(--ease-premium-inout);
+  animation-fill-mode: both, none;
+  animation-iteration-count: 1, infinite;
+}
+
+.signal-network-hero .module-site .module-orbit,
+.signal-network-hero .module-site .module-point {
+  animation-delay: 880ms, 3900ms;
+}
+
+.signal-network-hero .module-security .module-orbit,
+.signal-network-hero .module-security .module-point {
+  animation-delay: 1120ms, 4600ms;
+}
+
+.signal-network-hero .module-cloud .module-orbit,
+.signal-network-hero .module-cloud .module-point {
+  animation-delay: 1400ms, 5300ms;
+}
+
 .signal-network-hero .module-automation .module-label {
   font-size: 10px;
 }
 
 .signal-network-hero .core-glow {
-  animation: coreBreath 4200ms var(--ease-premium-inout) infinite;
+  animation:
+    coreIntroPulse 3200ms var(--ease-premium) both,
+    coreBreath 6200ms var(--ease-premium-inout) 3300ms infinite;
 }
 
 .core-signal {
@@ -11543,6 +11603,53 @@ body {
   transform-box: fill-box;
   transform-origin: center;
   animation: coreSignalRotate 7200ms linear infinite;
+}
+
+.activation-signal {
+  pointer-events: none;
+}
+
+.activation-beam {
+  fill: none;
+  stroke: rgba(47, 212, 199, 0.8);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 12px rgba(47, 212, 199, 0.38));
+  animation: activationBeam 1200ms var(--ease-premium) 180ms both;
+}
+
+.activation-spark {
+  fill: var(--signal-cyan);
+  stroke: rgba(247, 249, 252, 0.86);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 12px rgba(47, 212, 199, 0.74));
+  opacity: 0;
+  offset-path: path("M510 112 C454 120 412 154 378 190 S332 234 300 250");
+  animation: activationSpark 1180ms var(--ease-premium) 220ms both;
+}
+
+.network-particles {
+  pointer-events: none;
+}
+
+.network-particle {
+  fill: var(--signal-cyan);
+  opacity: 0;
+  filter: drop-shadow(0 0 10px rgba(47, 212, 199, 0.7));
+  animation: particlePresence 6200ms var(--ease-premium-inout) infinite;
+  animation-delay: 1650ms;
+}
+
+.particle-security {
+  fill: rgba(247, 249, 252, 0.92);
+  animation-delay: 1900ms;
+}
+
+.particle-cloud {
+  fill: var(--signal-warm);
+  animation-delay: 2150ms;
 }
 
 .signal-status-panel {
@@ -11558,7 +11665,7 @@ body {
   background: rgba(7, 19, 31, 0.76);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(8px);
-  animation: signalPanelIn 520ms var(--ease-premium) 720ms both;
+  animation: signalPanelIn 460ms var(--ease-premium) 90ms both;
 }
 
 .signal-status-head {
@@ -11586,16 +11693,44 @@ body {
 }
 
 .signal-status-panel li {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.45rem;
+  min-height: 1.45rem;
+  padding: 0.16rem 0.3rem;
+  border: 1px solid transparent;
+  border-radius: 0.45rem;
   color: rgba(247, 249, 252, 0.64);
   font-size: 0.72rem;
   line-height: 1.2;
   opacity: 0;
   transform: translateY(5px);
-  animation: signalStepIn 460ms var(--ease-premium) both;
-  animation-delay: calc(920ms + var(--i) * 300ms);
+  overflow: hidden;
+  animation:
+    signalStepIn 460ms var(--ease-premium) both,
+    signalStepActive 760ms var(--ease-premium) both;
+  animation-delay: calc(180ms + var(--i) * 450ms), calc(220ms + var(--i) * 640ms);
+}
+
+.signal-status-panel li::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(47, 212, 199, 0.72), transparent);
+  opacity: 0;
+  transform: translateX(-70%);
+  animation: signalStepSweep 920ms var(--ease-premium) both;
+  animation-delay: calc(320ms + var(--i) * 640ms);
+}
+
+.signal-status-panel .step-stable {
+  animation:
+    signalStepIn 460ms var(--ease-premium) both,
+    signalStepActive 760ms var(--ease-premium) both,
+    stableStepHold 6400ms var(--ease-premium-inout) 2800ms infinite;
+  animation-delay: 1710ms, 2420ms, 2800ms;
 }
 
 .signal-status-panel li span,
@@ -11606,6 +11741,33 @@ body {
   font-weight: 850;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.signal-stable-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  margin-top: 0.75rem;
+  padding: 0.32rem 0.5rem;
+  border: 1px solid rgba(47, 212, 199, 0.2);
+  border-radius: 999px;
+  color: rgba(247, 249, 252, 0.74);
+  background: rgba(47, 212, 199, 0.07);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(5px);
+  animation: stableBadgeArrive 720ms var(--ease-premium) 2860ms both;
+}
+
+.signal-stable-badge i {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--signal-cyan);
+  box-shadow: 0 0 14px rgba(47, 212, 199, 0.62);
 }
 
 .service-zone,
@@ -11827,6 +11989,66 @@ body {
   48% { box-shadow: 0 0 0 7px rgba(47, 212, 199, 0); }
 }
 
+@keyframes activationBeam {
+  0% { opacity: 0; stroke-dashoffset: 1; }
+  20% { opacity: 1; }
+  72%, 100% { opacity: 0.42; stroke-dashoffset: 0; }
+}
+
+@keyframes activationSpark {
+  0% { opacity: 0; offset-distance: 0%; transform: scale(0.72); }
+  16% { opacity: 1; transform: scale(1); }
+  78% { opacity: 1; }
+  100% { opacity: 0; offset-distance: 100%; transform: scale(0.82); }
+}
+
+@keyframes coreIntroPulse {
+  0% { opacity: 0.48; transform: scale(0.96); }
+  22% { opacity: 1; transform: scale(1.1); }
+  42% { opacity: 0.72; transform: scale(1); }
+  78% { opacity: 1; transform: scale(1.18); }
+  100% { opacity: 0.74; transform: scale(1); }
+}
+
+@keyframes heroConnectionGlow {
+  0% { stroke: rgba(47, 212, 199, 0.22); filter: drop-shadow(0 0 0 rgba(47, 212, 199, 0)); }
+  28%, 54% { stroke: rgba(47, 212, 199, 0.9); filter: drop-shadow(0 0 12px rgba(47, 212, 199, 0.38)); }
+  100% { stroke: rgba(47, 212, 199, 0.44); filter: drop-shadow(0 0 4px rgba(47, 212, 199, 0.18)); }
+}
+
+@keyframes heroNodeActivate {
+  0% { opacity: 0.72; filter: drop-shadow(0 0 0 rgba(47, 212, 199, 0)); transform: scale(0.96); }
+  52% { opacity: 1; filter: drop-shadow(0 0 16px rgba(47, 212, 199, 0.48)); transform: scale(1.08); }
+  100% { opacity: 1; filter: drop-shadow(0 0 8px rgba(47, 212, 199, 0.24)); transform: scale(1); }
+}
+
+@keyframes particlePresence {
+  0%, 14% { opacity: 0; }
+  22%, 70% { opacity: 0.92; }
+  100% { opacity: 0.18; }
+}
+
+@keyframes signalStepActive {
+  0% { color: rgba(247, 249, 252, 0.54); border-color: transparent; background: transparent; }
+  42%, 72% { color: var(--cloud-50); border-color: rgba(47, 212, 199, 0.3); background: rgba(47, 212, 199, 0.09); box-shadow: inset 0 0 22px rgba(47, 212, 199, 0.08); }
+  100% { color: rgba(247, 249, 252, 0.74); border-color: rgba(47, 212, 199, 0.12); background: rgba(47, 212, 199, 0.035); box-shadow: none; }
+}
+
+@keyframes signalStepSweep {
+  0% { opacity: 0; transform: translateX(-70%); }
+  24%, 72% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(70%); }
+}
+
+@keyframes stableStepHold {
+  0%, 100% { border-color: rgba(47, 212, 199, 0.22); background: rgba(47, 212, 199, 0.055); }
+  48% { border-color: rgba(47, 212, 199, 0.42); background: rgba(47, 212, 199, 0.1); }
+}
+
+@keyframes stableBadgeArrive {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes workflowRoute {
   0% { stroke-dashoffset: 1; opacity: 0.42; }
   18%, 72% { opacity: 1; }
@@ -11860,6 +12082,25 @@ body {
 }
 
 @media (max-width: 680px) {
+  .activation-signal,
+  .network-particles {
+    display: none;
+  }
+
+  .signal-network-hero .core-glow {
+    animation-duration: 5200ms, 7600ms;
+  }
+
+  .signal-network-hero .module-site .module-orbit,
+  .signal-network-hero .module-site .module-point,
+  .signal-network-hero .module-security .module-orbit,
+  .signal-network-hero .module-security .module-point,
+  .signal-network-hero .module-cloud .module-orbit,
+  .signal-network-hero .module-cloud .module-point {
+    animation-name: heroNodeActivate;
+    animation-iteration-count: 1;
+  }
+
   .signal-status-panel {
     position: static;
     width: auto;
@@ -11869,6 +12110,10 @@ body {
 
   .signal-status-panel ol {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .signal-stable-badge {
+    display: none;
   }
 
   .automation-flow-line {
@@ -11891,6 +12136,10 @@ body {
   .signal-network-hero::before,
   .signal-status-panel,
   .signal-status-panel li,
+  .activation-beam,
+  .activation-spark,
+  .network-particle,
+  .signal-stable-badge,
   .automation-flow-active,
   .automation-data-lines i,
   .clarity-scene.is-visible .flow-dot,
@@ -11903,6 +12152,7 @@ body {
 
   .signal-status-panel,
   .signal-status-panel li,
+  .signal-stable-badge,
   .cta-system-state span {
     opacity: 1;
     transform: none;
@@ -11911,7 +12161,12 @@ body {
   .automation-flow-active,
   .signal-network-hero .topo,
   .signal-network-hero .module-connection,
+  .activation-beam,
   .network-arrival path {
     stroke-dashoffset: 0;
+  }
+
+  .network-particles {
+    display: none;
   }
 }

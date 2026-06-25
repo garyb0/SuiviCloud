@@ -579,6 +579,7 @@ function SignalNetworkHero(lang) {
   const sequence = lang === "fr"
     ? ["Signal détecté", "Connexion", "Synchronisation", "Système stable"]
     : ["Signal detected", "Connection", "Synchronization", "System stable"];
+  const sequenceClasses = ["step-detect", "step-connect", "step-sync", "step-stable"];
   const moduleMarkup = modules.map((module, index) => {
     const label = module[lang];
     return `<g class="network-module module-${module.id}" tabindex="0" role="listitem" aria-label="${esc(label)}" style="--dx:${module.dx}px;--dy:${module.dy}px;--i:${index};">
@@ -600,8 +601,23 @@ function SignalNetworkHero(lang) {
       <desc id="hero-network-desc-${gridId}">${esc(lang === "fr" ? "Des modules dispersés se connectent progressivement à un noyau SuiviCloud stable." : "Dispersed modules progressively connect to a stable SuiviCloud core.")}</desc>
       <rect class="network-field" width="600" height="520" rx="24" fill="url(#${gridId})"></rect>
       <path class="topo" d="M54 394 C126 326 196 350 256 396 S396 456 506 354"></path>
+      <g class="activation-signal" aria-hidden="true">
+        <path class="activation-beam" pathLength="1" d="M510 112 C454 120 412 154 378 190 S332 234 300 250"></path>
+        <circle class="activation-spark" r="4"></circle>
+      </g>
       <g class="network-modules" role="list">
         ${moduleMarkup}
+      </g>
+      <g class="network-particles" aria-hidden="true">
+        <circle class="network-particle particle-site" r="3">
+          <animateMotion dur="5.8s" begin="1.72s" repeatCount="indefinite" path="M300 250 C236 214 180 152 104 110"></animateMotion>
+        </circle>
+        <circle class="network-particle particle-security" r="3">
+          <animateMotion dur="6.2s" begin="2s" repeatCount="indefinite" path="M300 250 C258 224 218 200 178 178"></animateMotion>
+        </circle>
+        <circle class="network-particle particle-cloud" r="3.4">
+          <animateMotion dur="6.6s" begin="2.24s" repeatCount="indefinite" path="M300 250 C372 244 448 248 512 282"></animateMotion>
+        </circle>
       </g>
       <g class="network-arrival" aria-hidden="true">
         <path pathLength="1" d="M300 250 C374 278 468 332 536 418"></path>
@@ -622,8 +638,11 @@ function SignalNetworkHero(lang) {
         <strong>${esc(lang === "fr" ? "Flux synchronisé" : "System Online")}</strong>
       </div>
       <ol>
-        ${sequence.map((item, index) => `<li style="--i:${index}"><span>0${index + 1}</span>${esc(item)}</li>`).join("")}
+        ${sequence.map((item, index) => `<li class="signal-step ${sequenceClasses[index]}" style="--i:${index}"><span>0${index + 1}</span>${esc(item)}</li>`).join("")}
       </ol>
+      <div class="signal-stable-badge">
+        <i></i>${esc(lang === "fr" ? "Online / Stable / Synced" : "Online / Stable / Synced")}
+      </div>
     </div>
     <div class="network-readout">
       <span><i></i>${lang === "fr" ? "état stable" : "stable state"}</span>
