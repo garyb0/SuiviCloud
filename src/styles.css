@@ -9894,8 +9894,8 @@ textarea:focus {
 }
 
 .clarity-copy.is-visible .clarity-progress span {
-  animation: clarityProgressFocus 3200ms var(--ease-premium, ease) both;
-  animation-delay: calc(180ms + var(--i) * 120ms);
+  animation: clarityStepSequence 4200ms var(--ease-premium, ease) both;
+  animation-delay: calc(120ms + var(--i) * 520ms);
 }
 
 .clarity-scene {
@@ -10111,6 +10111,128 @@ textarea:focus {
   color: rgba(247, 249, 252, 0.7);
   background: rgba(255, 255, 255, 0.05);
 }
+
+/* Scroll-triggered clarity transformation */
+.clarity-progress span {
+  position: relative;
+  transform-origin: left center;
+}
+
+.clarity-progress span::after {
+  content: "";
+  width: 0.42rem;
+  height: 0.42rem;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--signal-cyan);
+  opacity: 0;
+  box-shadow: 0 0 0 rgba(47, 212, 199, 0);
+}
+
+.clarity-copy.is-visible .clarity-progress span {
+  animation: clarityStepSequence 4200ms var(--ease-premium, ease) both;
+  animation-delay: calc(120ms + var(--i) * 520ms);
+}
+
+.clarity-copy.is-visible .clarity-progress span::after {
+  animation: clarityStepDot 4200ms var(--ease-premium, ease) both;
+  animation-delay: calc(120ms + var(--i) * 520ms);
+}
+
+.clarity-scene .before-node,
+.clarity-scene .after-node,
+.clarity-scene .problem-link,
+.clarity-scene .resolved-flow,
+.clarity-scene .flow-dot,
+.clarity-scene .clarity-hub,
+.clarity-scene .clarity-microdata span {
+  animation: none;
+}
+
+.clarity-scene .before-node {
+  opacity: 0;
+  transform: translate(calc(var(--sx) * 1.8), calc(var(--sy) * 1.8)) rotate(calc(var(--r) * 2.4));
+}
+
+.clarity-scene .after-node {
+  opacity: 0;
+  filter: saturate(0.78);
+  transform: translateY(18px) scale(0.96);
+}
+
+.clarity-scene .problem-link,
+.clarity-scene .resolved-flow {
+  stroke-dashoffset: 1;
+}
+
+.clarity-scene .clarity-hub {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+.clarity-scene .clarity-microdata span {
+  opacity: 0.32;
+  transform: translateY(8px);
+}
+
+.clarity-scene.is-visible .before-node {
+  animation:
+    beforeAssemble 740ms var(--ease-premium, ease) forwards,
+    beforeRecede 760ms var(--ease-premium, ease) forwards;
+  animation-delay: calc(100ms + var(--i) * 90ms), calc(1200ms + var(--i) * 70ms);
+}
+
+.clarity-scene.is-visible .problem-link {
+  animation: problemTrace 1050ms var(--ease-premium, ease) forwards;
+  animation-delay: 660ms;
+}
+
+.clarity-scene.is-visible .problem-link.link-2 {
+  animation-delay: 790ms;
+}
+
+.clarity-scene.is-visible .problem-link.link-3 {
+  animation-delay: 920ms;
+}
+
+.clarity-scene.is-visible .resolved-flow {
+  animation:
+    readableFlow 980ms var(--ease-premium, ease) forwards,
+    clarityLivingLine 6800ms var(--ease-premium-inout, ease-in-out) 3100ms infinite;
+  animation-delay: 1700ms, 3100ms;
+}
+
+.clarity-scene.is-visible .after-node {
+  animation:
+    afterStabilize 620ms var(--ease-premium, ease) forwards,
+    clarityNodeHold 6200ms var(--ease-premium-inout, ease-in-out) 3600ms infinite;
+  animation-delay: calc(2160ms + var(--i) * 140ms), calc(3600ms + var(--i) * 120ms);
+}
+
+.clarity-scene.is-visible .clarity-hub {
+  animation:
+    hubArrive 760ms var(--ease-premium, ease) forwards,
+    clarityHubPulse 6500ms var(--ease-premium-inout, ease-in-out) 3600ms infinite;
+  animation-delay: 1860ms, 3600ms;
+}
+
+.clarity-scene.is-visible .flow-dot {
+  animation:
+    afterStabilize 460ms var(--ease-premium, ease) forwards,
+    flowDotConfirm 3200ms var(--ease-premium-inout, ease-in-out) 3300ms infinite;
+  animation-delay: 2860ms, 3300ms;
+}
+
+.clarity-scene.is-visible .clarity-microdata span {
+  animation:
+    clarityBadgeActivate 540ms var(--ease-premium, ease) forwards,
+    clarityBadgeHold 6200ms var(--ease-premium-inout, ease-in-out) 3900ms infinite;
+  animation-delay: calc(3240ms + var(--i, 0) * 130ms), calc(3900ms + var(--i, 0) * 120ms);
+}
+
+.clarity-scene.is-visible .clarity-microdata span:nth-child(1) { --i: 0; }
+.clarity-scene.is-visible .clarity-microdata span:nth-child(2) { --i: 1; }
+.clarity-scene.is-visible .clarity-microdata span:nth-child(3) { --i: 2; }
 
 .method-trace-hero {
   position: relative;
@@ -10552,6 +10674,97 @@ textarea:focus {
   100% {
     color: var(--text-secondary);
     transform: translateX(0);
+  }
+}
+
+@keyframes clarityStepSequence {
+  0% {
+    color: var(--text-secondary);
+    transform: translateX(0);
+  }
+
+  16%, 48% {
+    color: var(--ink-950);
+    transform: translateX(4px);
+  }
+
+  100% {
+    color: var(--text-secondary);
+    transform: translateX(0);
+  }
+}
+
+@keyframes clarityStepDot {
+  0%, 12% {
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(47, 212, 199, 0);
+  }
+
+  24%, 58% {
+    opacity: 1;
+    box-shadow: 0 0 16px rgba(47, 212, 199, 0.48);
+  }
+
+  100% {
+    opacity: 0.32;
+    box-shadow: 0 0 0 rgba(47, 212, 199, 0);
+  }
+}
+
+@keyframes clarityLivingLine {
+  0%, 100% {
+    stroke: rgba(47, 212, 199, 0.58);
+    filter: drop-shadow(0 0 4px rgba(47, 212, 199, 0.14));
+  }
+
+  48% {
+    stroke: rgba(47, 212, 199, 0.86);
+    filter: drop-shadow(0 0 14px rgba(47, 212, 199, 0.3));
+  }
+}
+
+@keyframes clarityNodeHold {
+  0%, 100% {
+    border-color: rgba(47, 212, 199, 0.3);
+    filter: saturate(1);
+  }
+
+  50% {
+    border-color: rgba(47, 212, 199, 0.52);
+    filter: saturate(1.18);
+  }
+}
+
+@keyframes clarityHubPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 18px rgba(47, 212, 199, 0.06),
+      0 24px 60px rgba(0, 0, 0, 0.24);
+  }
+
+  48% {
+    box-shadow:
+      0 0 0 26px rgba(47, 212, 199, 0.025),
+      0 26px 68px rgba(0, 0, 0, 0.28);
+  }
+}
+
+@keyframes clarityBadgeActivate {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    border-color: rgba(47, 212, 199, 0.28);
+    background: rgba(47, 212, 199, 0.075);
+  }
+}
+
+@keyframes clarityBadgeHold {
+  0%, 100% {
+    border-color: rgba(47, 212, 199, 0.22);
+  }
+
+  50% {
+    border-color: rgba(47, 212, 199, 0.4);
   }
 }
 
@@ -11089,7 +11302,8 @@ textarea:focus {
   .before-node,
   .after-node,
   .clarity-hub,
-  .flow-dot {
+  .flow-dot,
+  .clarity-microdata span {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
@@ -11102,6 +11316,11 @@ textarea:focus {
   .problem-link,
   .resolved-flow {
     stroke-dashoffset: 0 !important;
+    animation: none !important;
+  }
+
+  .clarity-progress span,
+  .clarity-progress span::after {
     animation: none !important;
   }
 }
@@ -11895,19 +12114,8 @@ body {
   animation-iteration-count: 1, infinite;
 }
 
-.clarity-scene.is-visible .before-node {
-  animation-name: beforeAssemble, beforeRecede;
-}
-
 .clarity-scene.is-visible .resolved-flow {
   filter: drop-shadow(0 0 14px rgba(47, 212, 199, 0.2));
-}
-
-.clarity-scene.is-visible .flow-dot {
-  animation-name: afterStabilize, flowDotConfirm;
-  animation-duration: 500ms, 3000ms;
-  animation-timing-function: var(--ease-signal), var(--ease-premium-inout);
-  animation-iteration-count: 1, infinite;
 }
 
 .resolved-final-cta .button.primary {
