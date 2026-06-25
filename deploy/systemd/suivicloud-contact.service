@@ -1,0 +1,22 @@
+[Unit]
+Description=SuiviCloud contact form receiver
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+Group=www-data
+Environment=CONTACT_PORT=4010
+Environment=CONTACT_DATA_DIR=/var/lib/suivicloud/contact-submissions
+WorkingDirectory=/opt/suivicloud
+ExecStart=/usr/bin/node /opt/suivicloud/contact-server.js
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/var/lib/suivicloud/contact-submissions
+
+[Install]
+WantedBy=multi-user.target

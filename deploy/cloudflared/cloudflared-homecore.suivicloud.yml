@@ -1,0 +1,31 @@
+tunnel: 6d348fc5-4378-4e76-bdea-e0e93f274c86
+credentials-file: /etc/cloudflared-homecore/6d348fc5-4378-4e76-bdea-e0e93f274c86.json
+
+ingress:
+  - hostname: suivicloud.xyz
+    service: http://127.0.0.1:80
+  - hostname: www.suivicloud.xyz
+    service: http://127.0.0.1:80
+  - hostname: core.suivicloud.xyz
+    service: http://127.0.0.1:3202
+    originRequest:
+      httpHostHeader: core.suivicloud.xyz
+  - hostname: rdv.suivicloud.xyz
+    path: /book/*
+    service: http://127.0.0.1:3202
+  - hostname: rdv.suivicloud.xyz
+    path: /manage-booking/*
+    service: http://127.0.0.1:3202
+  - hostname: rdv.suivicloud.xyz
+    path: /api/public/*
+    service: http://127.0.0.1:3202
+  - hostname: rdv.suivicloud.xyz
+    path: /_next/*
+    service: http://127.0.0.1:3202
+  - hostname: rdv.suivicloud.xyz
+    path: /images/*
+    service: http://127.0.0.1:3202
+  - hostname: rdv.suivicloud.xyz
+    path: /favicon.ico
+    service: http://127.0.0.1:3202
+  - service: http_status:404

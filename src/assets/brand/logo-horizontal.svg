@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="80" viewBox="0 0 320 80" role="img" aria-labelledby="title">
+  <title id="title">SuiviCloud - logo horizontal</title>
+  <g transform="translate(8 8)">
+    <path d="M18 14h23c6.6 0 11 4.4 11 10.4 0 6.2-4.4 10.6-11 10.6H25c-7.8 0-13 5.1-13 12s5.2 12 13 12h21" fill="none" stroke="#07131F" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="18" cy="14" r="4.5" fill="#2FD4C7"/>
+    <circle cx="46" cy="59" r="4.5" fill="#2FD4C7"/>
+  </g>
+  <text x="88" y="50" fill="#07131F" font-family="Inter, Manrope, Arial, sans-serif" font-size="32" letter-spacing="0">
+    <tspan font-weight="800">Suivi</tspan><tspan font-weight="560">Cloud</tspan>
+  </text>
+</svg>

@@ -1,0 +1,18 @@
+{
+  "name": "suivicloud-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site statique bilingue pour SuiviCloud.",
+  "scripts": {
+    "audit:site": "node scripts/audit-site.js",
+    "build": "node src/build.js",
+    "check:links": "node scripts/check-links.js",
+    "contact:server": "node server/contact-server.js",
+    "dev": "node src/build.js && node scripts/serve.js",
+    "serve": "node scripts/serve.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
