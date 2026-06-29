@@ -15,9 +15,7 @@ if (!fs.existsSync(appPath)) {
 let app = fs.readFileSync(appPath, "utf8");
 if (app.includes(marker)) process.exit(0);
 
-const enhancement = String.raw`
-
-(function upgradeAutomationStorySectionFinal() {
+function upgradeAutomationStorySectionFinal() {
   const stories = [...document.querySelectorAll("[data-automation-scroll]")];
   if (!stories.length) return;
 
@@ -240,8 +238,9 @@ const enhancement = String.raw`
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) startCycle();
     else setActive(0);
   }
-})();
-`;
+}
+
+const enhancement = "\n\n(" + upgradeAutomationStorySectionFinal.toString() + ")();\n";
 
 app += enhancement;
 fs.writeFileSync(appPath, app);
