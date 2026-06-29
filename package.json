@@ -6,10 +6,10 @@
   "description": "Site statique bilingue pour SuiviCloud.",
   "scripts": {
     "audit:site": "node scripts/audit-site.js",
-    "build": "node src/build.js",
+    "build": "node src/build.js && node scripts/postbuild-automation-section.js",
     "check:links": "node scripts/check-links.js",
     "contact:server": "node server/contact-server.js",
-    "dev": "node src/build.js && node scripts/serve.js",
+    "dev": "node src/build.js && node scripts/postbuild-automation-section.js && node scripts/serve.js",
     "serve": "node scripts/serve.js"
   },
   "engines": {
