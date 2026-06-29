@@ -11,7 +11,7 @@ const focusableSelector = [
   "summary",
   "input:not([disabled])",
   "select:not([disabled])",
-  "textarea",
+  "textarea:not([disabled])",
   "[tabindex]:not([tabindex='-1'])"
 ].join(",");
 let menuReturnFocus = null;
@@ -347,7 +347,7 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
     }
   }[lang];
 
-  const styleId = "automation-story-upgrade-v2";
+  const styleId = "automation-story-upgrade-v3";
   if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
     style.id = styleId;
@@ -372,9 +372,7 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
       }
 
       .automation-story-upgraded .automation-narrative,
-      .automation-story-upgraded .automation-workflow-panel {
-        top: 6.2rem;
-      }
+      .automation-story-upgraded .automation-workflow-panel { top: 6.2rem; }
 
       .automation-story-upgraded .automation-narrative .section-intro {
         gap: 1.15rem;
@@ -414,9 +412,7 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
         margin-top: 1.4rem;
       }
 
-      .automation-story-upgraded .automation-cta-row .button {
-        margin-top: 0;
-      }
+      .automation-story-upgraded .automation-cta-row .button { margin-top: 0; }
 
       .automation-story-upgraded .automation-cta-row .button.primary {
         color: #fff;
@@ -453,17 +449,15 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
       .automation-story-upgraded .automation-step::before {
         content: "";
         position: absolute;
-        left: 1.45rem;
-        top: 3.5rem;
-        bottom: -1.05rem;
+        left: 2.2rem;
+        top: 3.6rem;
+        bottom: -1rem;
         width: 1px;
         background: linear-gradient(var(--teal-dark), transparent);
-        opacity: 0.28;
+        opacity: 0.34;
       }
 
-      .automation-story-upgraded .automation-step:last-child::before {
-        display: none;
-      }
+      .automation-story-upgraded .automation-step:last-child::before { display: none; }
 
       .automation-story-upgraded .automation-step span {
         width: 2.3rem;
@@ -476,13 +470,8 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
         font-family: var(--font-mono);
       }
 
-      .automation-story-upgraded .automation-step h3 {
-        font-size: clamp(1.15rem, 1.7vw, 1.55rem);
-      }
-
-      .automation-story-upgraded .automation-step p {
-        margin-top: 0.45rem;
-      }
+      .automation-story-upgraded .automation-step h3 { font-size: clamp(1.15rem, 1.7vw, 1.55rem); }
+      .automation-story-upgraded .automation-step p { margin-top: 0.45rem; }
 
       .automation-story-upgraded .automation-step small {
         grid-column: 2;
@@ -572,9 +561,17 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
         background-size: 42px 42px, 42px 42px, auto;
       }
 
+      .automation-story-upgraded .automation-flow-line {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
       .automation-story-upgraded .automation-flow-track {
         fill: none;
-        stroke: rgba(220, 229, 236, 0.22);
+        stroke: rgba(220, 229, 236, 0.24);
         stroke-width: 2;
       }
 
@@ -594,9 +591,24 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
         backdrop-filter: blur(14px);
       }
 
-      .automation-story-upgraded .automation-node strong {
-        font-size: 0.95rem;
+      .automation-story-upgraded .automation-node::before {
+        content: "";
+        position: absolute;
+        z-index: 3;
+        width: 0.65rem;
+        height: 0.65rem;
+        border-radius: 50%;
+        background: var(--signal-cyan);
+        box-shadow: 0 0 0 5px rgba(47, 212, 199, 0.12), 0 0 22px rgba(47, 212, 199, 0.68);
       }
+
+      .automation-story-upgraded .automation-node.node-1::before { right: -0.34rem; top: calc(50% - 0.33rem); }
+      .automation-story-upgraded .automation-node.node-2::before { left: -0.34rem; top: calc(50% - 0.33rem); }
+      .automation-story-upgraded .automation-node.node-3::before { right: -0.34rem; top: calc(50% - 0.33rem); }
+      .automation-story-upgraded .automation-node.node-4::before { left: -0.34rem; top: calc(50% - 0.33rem); }
+      .automation-story-upgraded .automation-node.node-5::before { left: calc(50% - 0.33rem); top: -0.34rem; }
+
+      .automation-story-upgraded .automation-node strong { font-size: 0.95rem; }
 
       .automation-story-upgraded .automation-node small {
         color: rgba(247, 249, 252, 0.54);
@@ -611,10 +623,13 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
       }
 
       .automation-live-readout {
+        position: absolute;
+        left: 0.9rem;
+        right: 0.9rem;
+        bottom: 0.9rem;
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0.55rem;
-        margin-top: 0.8rem;
       }
 
       .automation-live-readout span {
@@ -638,8 +653,7 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
       .automation-story-upgraded .automation-final-state {
         border-radius: 14px;
         border-color: rgba(47, 212, 199, 0.3);
-        background:
-          linear-gradient(90deg, rgba(47, 212, 199, 0.12), rgba(47, 212, 199, 0.04));
+        background: linear-gradient(90deg, rgba(47, 212, 199, 0.12), rgba(47, 212, 199, 0.04));
       }
 
       .automation-story-upgraded .automation-final-state p {
@@ -654,43 +668,24 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
       }
 
       @media (max-width: 1100px) {
-        .automation-story-upgraded {
-          grid-template-columns: 1fr;
-        }
-
+        .automation-story-upgraded { grid-template-columns: 1fr; }
         .automation-story-upgraded .automation-narrative,
-        .automation-story-upgraded .automation-workflow-panel {
-          position: static;
-        }
-
-        .automation-story-upgraded .automation-narrative .section-intro h2 {
-          max-width: 14ch;
-        }
+        .automation-story-upgraded .automation-workflow-panel { position: static; }
+        .automation-story-upgraded .automation-narrative .section-intro h2 { max-width: 14ch; }
       }
 
       @media (max-width: 680px) {
-        .automation-story-upgraded::before {
-          inset: -1.4rem -0.7rem;
-          border-radius: 18px;
-        }
-
-        .automation-story-upgraded .automation-step {
-          grid-template-columns: 46px 1fr;
-          min-height: auto;
-        }
-
+        .automation-story-upgraded::before { inset: -1.4rem -0.7rem; border-radius: 18px; }
+        .automation-story-upgraded .automation-step { grid-template-columns: 46px 1fr; min-height: auto; }
+        .automation-story-upgraded .automation-step::before { left: 2.2rem; }
         .automation-story-upgraded .automation-workflow {
           min-height: auto;
           display: grid;
           gap: 0.72rem;
           padding: 0.82rem;
         }
-
         .automation-story-upgraded .automation-flow-line,
-        .automation-story-upgraded .automation-data-lines {
-          display: none;
-        }
-
+        .automation-story-upgraded .automation-data-lines { display: none; }
         .automation-story-upgraded .automation-node {
           position: relative;
           inset: auto;
@@ -698,14 +693,13 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
           min-height: 0;
           opacity: 0.86;
         }
-
-        .automation-live-readout {
-          grid-template-columns: 1fr;
+        .automation-story-upgraded .automation-node::before {
+          left: -0.34rem !important;
+          right: auto !important;
+          top: calc(50% - 0.33rem) !important;
         }
-
-        .automation-panel-head {
-          display: grid;
-        }
+        .automation-live-readout { position: relative; left: auto; right: auto; bottom: auto; grid-template-columns: 1fr; }
+        .automation-panel-head { display: grid; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -717,14 +711,13 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
           scroll-behavior: auto !important;
           transition-duration: 0.001ms !important;
         }
-
-        .automation-story-upgraded .automation-flow-active {
-          stroke-dashoffset: 0;
-        }
+        .automation-story-upgraded .automation-flow-active { stroke-dashoffset: 0; }
       }
     `;
     document.head.appendChild(style);
   }
+
+  const alignedPath = "M221 72 C247 72 266 132 294 132 C270 132 272 218 247 218 C276 218 274 288 288 288 C276 306 258 321 241 328";
 
   for (const story of stories) {
     story.classList.add("automation-story-upgraded");
@@ -791,6 +784,10 @@ for (const modes of document.querySelectorAll("[data-automation-modes]")) {
       }
       badge.textContent = status;
       node.setAttribute("aria-label", `${title}. ${description}`);
+    });
+
+    story.querySelectorAll(".automation-flow-track, .automation-flow-active").forEach((path) => {
+      path.setAttribute("d", alignedPath);
     });
 
     const panel = story.querySelector(".automation-workflow-panel");
